@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
-const Home = (props) => <h1>HOME</h1>
+const Links = () => (
+  <nav>
+    <Link to="/">Home</Link>
+    <Link to={{ pathname: "/index.aspx/about" }}>About</Link>
+    <Link replace to="/contact">Contact</Link>
+  </nav>
+)
 
-class App extends Component {
-  render() {
-    return (
-     <Router>
-     <div>
-        <Route exact path="/" component={Home} />
-        {/*<Route path="/about" render={() => <h1>About</h1>} />*/}
-        <Route path="/about" children={({match}) => match &&  <h1>About</h1>} />
-      </div>
-    </Router>
-     
-    );
-  }
-}
+const App = (props) => (
+  <Router basename={props.path}>
+    <div>
+      <Links />
+      <Route exact path="/" render={() => <h1>Home</h1>} />
+      <Route path="/index.aspx/about" render={() => <h1>About</h1>} />
+      <Route path="/contact" render={() => <h1>Contact</h1>} />
+    </div>
+  </Router>
+);
 
 export default App;
